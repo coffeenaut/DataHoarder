@@ -1,0 +1,56 @@
+[
+    {
+        "20240101" : {
+            "city": "San Francisco",
+            "zip": "94583",
+            "high": {
+                "predicted": "62.7",
+                "actual": "64.6"
+            },
+            "low" : {
+                "predicted": "50.5",
+                "actual": "49.8"
+            },
+            "condition": "light rain",
+            "entries": [
+                {
+                    "timestamp": "0000",
+                    "predicted": "51.4",
+                    "actual": "51.1"
+                }, 
+                {
+                    "timestamp": "0102",
+                    "predicted": "50.4",
+                    "actual": "50.3"
+                }
+            ]
+        }
+    },
+    {
+        "20240102" : {
+            "city": "San Francisco",
+            "zip": "94583",
+            "high": {
+                "predicted": "65.7",
+                "actual": "63.6"
+            },
+            "low" : {
+                "predicted": "51.8",
+                "actual": "50.1"
+            },
+            "condition": "cloudy",
+            "entries": [
+                {
+                    "timestamp": "0000",
+                    "predicted": "58.2",
+                    "actual": "57.9"
+                }, 
+                {
+                    "timestamp": "0100",
+                    "predicted": "49",
+                    "actual": "50.9"
+                }
+            ]
+        }
+    }
+]

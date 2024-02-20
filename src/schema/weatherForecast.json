@@ -1,0 +1,18 @@
+{
+    "city": "location.name",
+    "condition": "forecast.forecastday[0].day.condition.text",
+    "high": {
+        "predicted": "forecast.forecastday[0].day.maxtemp_f"
+    },
+    "low": {
+        "predicted": "forecast.forecastday[0].day.mintemp_f"
+    },
+    "entries": [
+        {
+            "path": "forecast.forecastday[0].hour[x]",
+            "hour": "time",
+            "temp":  "temp_f"
+        }
+    ]
+
+}

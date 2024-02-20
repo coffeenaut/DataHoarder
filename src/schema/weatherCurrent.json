@@ -1,0 +1,5 @@
+{
+    "city": "location.name",
+    "temp": "current.temp_f",
+    "condition" : "current.condition.text"
+}
