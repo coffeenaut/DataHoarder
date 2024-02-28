@@ -19,11 +19,14 @@ if(datetime) {
         else {
             const stringObj = fs.readFileSync(filePath, 'utf8')
             const jsonObj = JSON.parse(stringObj)
-            ParseResponseToObj(jsonObj, "weatherForecast")
+            let gObj = ParseResponseToObj(jsonObj, "weatherForecast")
+            storage.StoreData(gObj)
         }
         
     })()
     
 
 }
-
+// if(tFlag) {
+//     storage.StoreData(tFlag)
+// }
