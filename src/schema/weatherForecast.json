@@ -1,4 +1,5 @@
 {
+    "date": "forecast.forecastday[0].date",
     "city": "location.name",
     "condition": "forecast.forecastday[0].day.condition.text",
     "high": {

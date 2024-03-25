@@ -1,4 +1,6 @@
 const fs = require('fs')
+const axios = require('axios')
+const dotenv = require('dotenv').config()
 
 /** Gets a schema of obj with parameters where values contain mapped path of json param
  * schema only goes one level deep
@@ -57,7 +59,6 @@ const ParseResponseToObj = (response, objName) => {
             }
             else {
                 newObject[property] = GetValueFromObject(value, response)
-                console.log(newObject[property])
             }
         }
     }
@@ -81,14 +82,6 @@ function GetValueFromObject( path, obj, index = 0) {
         if(containsArrayVal) {
             propName = containsArrayVal.path
             hasSubArray = true
-            // if(containsArrayVal.array) {
-            //     hasSubArray = true
-            //     hasInitialSubArray = false
-            // }
-            // else {
-            //     hasSubArray = false
-            //     hasInitialSubArray = true
-            // }
         }
         if(hasSubArray) {
             if(containsArrayVal.initial)
@@ -103,12 +96,6 @@ function GetValueFromObject( path, obj, index = 0) {
                 tempObj = nArray
             }
             hasSubArray = false
-            // let  arrayVal = []
-            // for(let subVal of tempObj) {
-            //     arrayVal.push(subVal[propName])
-            // }
-            // tempObj = arrayVal
-            // hasSubArray = false
         }
         else 
                 tempObj = tempObj[propName]
@@ -171,4 +158,47 @@ function getArrayList(path, json) {
     }
     return tempObj
 }
-module.exports = {ParseResponseToObj}
+/** Traverses an object given the path and retreives the array defined by '[x]' in schema
+ * @param {obj} rType The request name for a given api
+ * @param {obj} p object that holds parameter arguments to send in request
+ * @returns {*} A formatted url to send http requests
+ **/
+function getApiQuery(qType, p) {
+    const requestUrl = process.env.API
+    const apiKey = process.env.API_KEY
+    const queryType = qType
+
+    let formattedUrl = requestUrl
+    if(queryType == "forecast") {
+        formattedUrl += "/forecast.json"
+    }
+    //appends request parameters
+    formattedUrl += `?key=${apiKey}`
+    let params = Object.entries(p)
+    for(let i=0; i < params.length; i++) {
+        formattedUrl += `&${params[i][0]}=${params[i][1]}`
+    }
+    return formattedUrl
+}
+/** Traverses an object given the path and retreives the array defined by '[x]' in schema
+ * @param {int | string} location string (city) or int (zip) to query weather for
+ * @param {int} numOfDays Forecast for the certain number of days
+ * @returns {*} Parsed object defined by weather schema with data returned from weather api
+ **/
+async function GetWeatherForecast (location, numOfDays) {
+    let response = {}
+    let weatherData = null
+    if(location && numOfDays) {
+        let params = {
+            q: location,
+            days: numOfDays,
+        }
+        const weatherForecastApi = getApiQuery("forecast", params)
+        weatherData = await axios.get(weatherForecastApi)
+    }
+    if(weatherData) {
+        response = ParseResponseToObj(weatherData.data, "weatherForecast")
+    }
+    return response
+}
+module.exports = {ParseResponseToObj, GetWeatherForecast}

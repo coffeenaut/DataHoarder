@@ -3,21 +3,22 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv').config()
 const weatherModel = require('../schema/weather')
 const db_connectString = process.env.db_connection_string
-
 const StoreData = async (data) => {
-    mongoose.connect(db_connectString, {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true
-    })
-    .then(() => {
-        console.log('MongoDB connected...')
-        weatherModel.create(data, function (e) {
-            if(e)
-                console.log(e)
-        })
-    })
-    .catch(err => console.log(err));
+    try{
+        await DBConnect()
+        weatherModel.create(data)
+        DBDisconnect();
+    }
+    catch(e) {
+        throw e
+    }
+}
+async function DBConnect() {
+    mongoose.connect(db_connectString)
+    .then(() => {console.log("mongo connected")})
+    .catch(err => {throw err})
+}
+async function DBDisconnect() {
     mongoose.connection.close()
 }
-
-module.exports =  { StoreData }
+module.exports =  { StoreData}
