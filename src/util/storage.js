@@ -13,4 +13,14 @@ const StoreData = async (data) => {
         throw e
     }
 }
-module.exports =  {StoreData}
+const UpdateData = async (query, data) => {
+    try{
+        await mongoose.connect(db_connectString)
+        await weatherModel.findOneAndUpdate(query, data)
+        mongoose.connection.close()
+    }
+    catch(e) {
+        throw e
+    }
+}
+module.exports =  {StoreData, UpdateData}

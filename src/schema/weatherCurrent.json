@@ -1,5 +1,6 @@
 {
     "city": "location.name",
-    "temp": "current.temp_f",
+    "currentTime": "location.localtime",
+    "actual": "current.temp_f",
     "condition" : "current.condition.text"
 }

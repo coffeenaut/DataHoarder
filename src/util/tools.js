@@ -182,6 +182,9 @@ function getApiQuery(qType, p) {
     if(queryType == "forecast") {
         formattedUrl += "/forecast.json"
     }
+    if(queryType == "current") {
+        formattedUrl += "/current.json"
+    }
     //appends request parameters
     formattedUrl += `?key=${apiKey}`
     let params = Object.entries(p)
@@ -211,4 +214,19 @@ async function GetWeatherForecast (location, numOfDays) {
     }
     return response
 }
-module.exports = {ParseResponseToObj, GetWeatherForecast}
+async function GetCurrentWeather (location) {
+    let response = {}
+    let weatherData = null
+    if(location) {
+        let params = {
+            q: location
+        }
+        const weatherForecastApi = getApiQuery("current", params)
+        weatherData = await axios.get(weatherForecastApi)
+    }
+    if(weatherData) {
+        response = ParseResponseToObj(weatherData.data, "weatherCurrent")
+    }
+    return response
+}
+module.exports = {ParseResponseToObj, GetWeatherForecast, GetCurrentWeather}
