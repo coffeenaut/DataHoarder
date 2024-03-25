@@ -12,7 +12,7 @@
         {
             "path": "forecast.forecastday[0].hour[x]",
             "hour": "time",
-            "temp":  "temp_f"
+            "predicted": "temp_f"
         }
     ]
 

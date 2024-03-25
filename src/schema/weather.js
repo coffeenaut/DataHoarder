@@ -12,7 +12,7 @@ const WeatherSchema = new mongoose.Schema({
     predicted: mongoose.Decimal128,
     actual: mongoose.Decimal128
   },
-  entries: [{hour: String, temp: mongoose.Decimal128}]
+  entries: [{hour: String, predicted: mongoose.Decimal128, actual: mongoose.Decimal128}]
 
 });
 
