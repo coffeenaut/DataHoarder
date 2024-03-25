@@ -2,6 +2,15 @@ const fs = require('fs')
 const axios = require('axios')
 const dotenv = require('dotenv').config()
 
+
+/** Checks if object is empty
+ * schema only goes one level deep
+ * @param {obj} obj object to validate against
+ * @returns {true|false} boolean if object contains any properties 
+ **/
+function isObjectEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
 /** Gets a schema of obj with parameters where values contain mapped path of json param
  * schema only goes one level deep
  * @param {response} obj json typically from web response
@@ -12,7 +21,7 @@ const ParseResponseToObj = (response, objName) => {
     const filePath = `./src/schema/${objName}.json`
     let newObject = {}
     if(!fs.existsSync(filePath)) {
-        console.log("nuffin")
+        throw `Schema '${objName}' does not exist`
     }
     else {
         const schemaObj = fs.readFileSync(filePath, 'utf8')
@@ -36,11 +45,12 @@ const ParseResponseToObj = (response, objName) => {
                             for(let ii = 0; ii < arrayValues.length; ii++) {
                                 if(arrayValues[ii][0] !== "path") {
                                     tObj[arrayValues[ii][0]] = item[arrayValues[ii][1]]
-                                    newArray.push(tObj)
                                 }
                                     
 
                             }
+                            if(!isObjectEmpty(tObj)) 
+                                newArray.push(tObj)
                         }
                         newObject[property] = newArray
                     }

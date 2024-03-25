@@ -5,20 +5,12 @@ const weatherModel = require('../schema/weather')
 const db_connectString = process.env.db_connection_string
 const StoreData = async (data) => {
     try{
-        await DBConnect()
-        weatherModel.create(data)
-        DBDisconnect();
+        await mongoose.connect(db_connectString)
+        await weatherModel.create(data)
+        mongoose.connection.close()
     }
     catch(e) {
         throw e
     }
 }
-async function DBConnect() {
-    mongoose.connect(db_connectString)
-    .then(() => {console.log("mongo connected")})
-    .catch(err => {throw err})
-}
-async function DBDisconnect() {
-    mongoose.connection.close()
-}
-module.exports =  { StoreData}
+module.exports =  {StoreData}

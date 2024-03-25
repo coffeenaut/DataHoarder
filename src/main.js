@@ -1,4 +1,4 @@
-const storage = require('./util/storage')
+// const storage = require('./util/storage')
 const request = require('./util/request')
 const toolkit = require('./util/tools')
 const logger = require('./util/logger')
@@ -13,8 +13,9 @@ if(forecastFlag) {
         try {
             logger.writeLog("info", "main: querying weather api")
             const sunolForecast = await toolkit.GetWeatherForecast(94586, 1)
+            console.log(sunolForecast)
             logger.writeLog("info", "main: storing forecast data")
-            storage.StoreData(sunolForecast)
+            await storage.StoreData(sunolForecast)()
         }
         catch (e) {
             logger.writeLog("error", e)
