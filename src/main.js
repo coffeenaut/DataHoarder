@@ -28,13 +28,15 @@ if(currentFlag) {
         try {
             logger.writeLog("info", "main: querying weather api (current)")
             const currentWeather = await toolkit.GetCurrentWeather(94586)
-            console.log(hour)
+	    const date = currentWeather.currentTime.split(' ')
+		const hour = `${date[0]} ${date[1].split(':')[0]}:00`
+		console.log(hour)
+		let nDate = new Date(date[0])
             let query = {
-                "date": date[0],
-                "entries.hour": hour
+		"entries": {$elemMatch: {"hour": hour}}
             }
             let loggedWeather = {
-                "actual": currentWeather.actual
+		$set: { "entries.$.actual": 50.67}
             }
             await storage.UpdateData(query, loggedWeather)()
             logger.writeLog("info", "main: updating weather document")
