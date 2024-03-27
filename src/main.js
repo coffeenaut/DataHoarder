@@ -13,9 +13,9 @@ if(forecastFlag) {
     ( async () => {
         try {
             logger.writeLog("info", "main: querying weather api (forecast)")
-            const sunolForecast = await toolkit.GetWeatherForecast(94586, 1)
+            const forecast = await toolkit.GetWeatherForecast(forecastFlag, 1)
             logger.writeLog("info", "main: storing forecast data")
-            await storage.StoreData(sunolForecast)()
+            await storage.StoreData(forecast)()
         }
         catch (e) {
             logger.writeLog("error", e)
@@ -26,20 +26,19 @@ if(forecastFlag) {
 if(currentFlag) {
     (async () => {
         try {
-            logger.writeLog("info", "main: querying weather api (current)")
-            const currentWeather = await toolkit.GetCurrentWeather(94586)
+        logger.writeLog("info", "main: querying weather api (current)")
+        const currentWeather = await toolkit.GetCurrentWeather(currentFlag)
 	    const date = currentWeather.currentTime.split(' ')
 		const hour = `${date[0]} ${date[1].split(':')[0]}:00`
 		console.log(hour)
 		let nDate = new Date(date[0])
-            let query = {
-		"entries": {$elemMatch: {"hour": hour}}
-            }
-            let loggedWeather = {
-		$set: { "entries.$.actual": 50.67}
-            }
-            await storage.UpdateData(query, loggedWeather)()
-            logger.writeLog("info", "main: updating weather document")
+        let query = {
+            "city": currentWeather.city,
+		    "entries": {$elemMatch: {"hour": hour}}
+        }
+        let loggedWeather = { $set: { "entries.$.actual": currentWeather.actual} }
+        await storage.UpdateData(query, loggedWeather)()
+        logger.writeLog("info", "main: updating weather document")
         }
         catch (e) {
             logger.writeLog("error", e)
