@@ -64,7 +64,7 @@ const forecast = {
                 daily_will_it_snow: 0,
                 daily_chance_of_snow: 0,
                 condition: {
-                  text: "Partly Cloudy ",
+                  text: "Partly Cloudy",
                   icon: "//cdn.weatherapi.com/weather/64x64/day/116.png",
                   code: 1003,
                 },
@@ -1047,4 +1047,8 @@ const forecast = {
         },
     }
 }
-module.exports = {forecast}
+const currentWeather = {
+  data: 
+    {"location":{"name":"San Ramon","region":"California","country":"USA","lat":37.75,"lon":-121.95,"tz_id":"America/Los_Angeles","localtime_epoch":1711565826,"localtime":"2024-03-27 11:57"},"current":{"last_updated_epoch":1711565100,"last_updated":"2024-03-27 11:45","temp_c":13.9,"temp_f":57.0,"is_day":1,"condition":{"text":"Light rain","icon":"//cdn.weatherapi.com/weather/64x64/day/296.png","code":1183},"wind_mph":12.5,"wind_kph":20.2,"wind_degree":180,"wind_dir":"S","pressure_mb":1021.0,"pressure_in":30.15,"precip_mm":0.0,"precip_in":0.0,"humidity":64,"cloud":100,"feelslike_c":13.7,"feelslike_f":56.6,"vis_km":16.0,"vis_miles":9.0,"uv":4.0,"gust_mph":17.0,"gust_kph":27.4}}
+}
+module.exports = {forecast, currentWeather}
