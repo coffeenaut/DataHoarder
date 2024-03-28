@@ -19,10 +19,13 @@ Schema Syntax as follows
 ```
 Attributes denotes object properties to define, while values denotes path of the the data value in a JSON object.
 '[0]' is an operator denoting first object of array and '[x]' operator for matching objects.
-> Schema is limited to 2 layers deep
+> [!Note] Schema is limited to 2 layers deep
 
 ## Project setup
 ```
 git clone https://github.com/coffeenaut/DataHoarder.git
 npm install
 ```
+## Deployment
+The script was created to run as a node process and scheduled as a cron job for simple management.
+ex. `node main.js -f 73301`
